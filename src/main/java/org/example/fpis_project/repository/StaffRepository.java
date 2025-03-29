@@ -1,6 +1,6 @@
 package org.example.fpis_project.repository;
 
-import org.example.fpis_project.entity.Staff;
+import org.example.fpis_project.model.entity.Staff;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

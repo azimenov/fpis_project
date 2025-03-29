@@ -1,7 +1,7 @@
 package org.example.fpis_project.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.example.fpis_project.entity.Business;
+import org.example.fpis_project.model.entity.Business;
 import org.example.fpis_project.repository.BusinessRepository;
 import org.example.fpis_project.service.BusinessService;
 import org.springframework.stereotype.Service;

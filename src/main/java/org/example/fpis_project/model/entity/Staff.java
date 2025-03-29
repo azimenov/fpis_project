@@ -1,12 +1,10 @@
-package org.example.fpis_project.entity;
+package org.example.fpis_project.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Entity
 @Data
@@ -23,7 +21,4 @@ public class Staff {
     @ManyToOne
     @JoinColumn(name = "business_id")
     private Business business;
-
-    @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL)
-    private List<Booking> bookings;
 }

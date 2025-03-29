@@ -1,7 +1,7 @@
 package org.example.fpis_project.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.example.fpis_project.entity.User;
+import org.example.fpis_project.model.entity.User;
 import org.example.fpis_project.repository.UserRepository;
 import org.example.fpis_project.service.UserService;
 import org.springframework.stereotype.Service;

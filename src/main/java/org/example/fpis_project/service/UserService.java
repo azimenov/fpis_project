@@ -1,6 +1,6 @@
 package org.example.fpis_project.service;
 
-import org.example.fpis_project.entity.User;
+import org.example.fpis_project.model.entity.User;
 
 import java.util.List;
 import java.util.Optional;

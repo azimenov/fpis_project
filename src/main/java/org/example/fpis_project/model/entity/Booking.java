@@ -1,4 +1,4 @@
-package org.example.fpis_project.entity;
+package org.example.fpis_project.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,22 +6,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users")
-public class User {
+public class Booking {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String username;
-    private String password;
-    private String phone;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Booking> bookings;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "schedule_slot_id", nullable = false)
+    private ScheduleSlot scheduleSlot;
 }

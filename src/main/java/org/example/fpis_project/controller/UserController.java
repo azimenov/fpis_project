@@ -1,7 +1,7 @@
 package org.example.fpis_project.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.fpis_project.entity.User;
+import org.example.fpis_project.model.entity.User;
 import org.example.fpis_project.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
