@@ -14,8 +14,7 @@ import java.util.Optional;
 public class DefaultUserService implements UserService {
 
     private final UserRepository userRepository;
-
-
+    
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -28,14 +27,6 @@ public class DefaultUserService implements UserService {
 
     @Override
     public User createUser(User user) {
-        return userRepository.save(user);
-    }
-
-    @Override
-    public User updateUser(Long id, User userDetails) {
-        User user = userRepository.findById(id).orElseThrow();
-        user.setUsername(userDetails.getUsername());
-        user.setPhone(userDetails.getPhone());
         return userRepository.save(user);
     }
 
