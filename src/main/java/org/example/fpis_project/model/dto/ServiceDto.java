@@ -14,6 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 public class ServiceDto {
 
+    private Long id;
+
     private String name;
 
     private BigDecimal lowestPrice;

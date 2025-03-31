@@ -28,6 +28,7 @@ public class ServiceService {
 
     private ServiceDto mapToServiceDto(org.example.fpis_project.model.entity.Service service) {
         return ServiceDto.builder()
+                .id(service.getId())
                 .name(service.getName())
                 .lowestPrice(service.getLowestPrice())
                 .highestPrice(service.getHighestPrice())
