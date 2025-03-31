@@ -5,11 +5,13 @@ import org.example.fpis_project.model.entity.Staff;
 import org.example.fpis_project.service.impl.StaffService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController("/staff")
+@RestController
+@RequestMapping("/staff")
 @RequiredArgsConstructor
 public class StaffController {
 
