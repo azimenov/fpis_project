@@ -22,9 +22,13 @@ public class Service {
 
     private String description;
 
-    private BigDecimal price;
+    private BigDecimal lowestPrice;
+
+    private BigDecimal highestPrice;
 
     private Integer duration;
+
+    private String topic;
 
     @ManyToOne
     @JoinColumn(name = "staff_id", nullable = false)

@@ -30,7 +30,7 @@ public class BusinessController {
         return businessService.createBusiness(business);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public void deleteBusiness(@PathVariable Long id) {
         businessService.deleteBusiness(id);
     }
