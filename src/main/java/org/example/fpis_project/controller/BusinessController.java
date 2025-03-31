@@ -22,12 +22,12 @@ public class BusinessController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Business> getBusinessById(@PathVariable Long id) {
+    public Optional<BusinessDto> getBusinessById(@PathVariable Long id) {
         return businessService.getBusinessById(id);
     }
 
     @PostMapping
-    public Business createBusiness(@RequestBody Business business) {
+    public BusinessDto createBusiness(@RequestBody Business business) {
         return businessService.createBusiness(business);
     }
 

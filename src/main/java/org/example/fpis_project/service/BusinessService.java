@@ -9,9 +9,9 @@ import java.util.Optional;
 public interface BusinessService {
     List<BusinessDto> getAllBusinesses();
 
-    Optional<Business> getBusinessById(Long id);
+    Optional<BusinessDto> getBusinessById(Long id);
 
-    Business createBusiness(Business business);
+    BusinessDto createBusiness(Business business);
 
     void deleteBusiness(Long id);
 }

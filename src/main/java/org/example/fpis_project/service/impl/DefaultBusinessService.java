@@ -51,13 +51,13 @@ public class DefaultBusinessService implements BusinessService {
     }
 
     @Override
-    public Optional<Business> getBusinessById(Long id) {
-        return businessRepository.findById(id);
+    public Optional<BusinessDto> getBusinessById(Long id) {
+        return businessRepository.findById(id).map(this::mapToBusinessDto);
     }
 
     @Override
-    public Business createBusiness(Business business) {
-        return businessRepository.save(business);
+    public BusinessDto createBusiness(Business business) {
+        return mapToBusinessDto(businessRepository.save(business));
     }
 
     @Override
