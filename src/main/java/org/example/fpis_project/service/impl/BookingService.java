@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 public class BookingService {
 
     private final BookingRepository bookingRepository;
-    private final ScheduleSlotService scheduleSlotService;
     private final ScheduleSlotRepository scheduleSlotRepository;
 
     @Transactional
@@ -37,9 +36,7 @@ public class BookingService {
         );
         booking.setScheduleSlot(slot);
 
-        Booking savedBooking = bookingRepository.save(booking);
-
-        return savedBooking;
+        return bookingRepository.save(booking);
     }
 
 }

@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface ScheduleSlotRepository extends CrudRepository<ScheduleSlot, Long> {
 
-    List<ScheduleSlot> findByStaffIdAndScheduledFalse(Long staffId);
+    List<ScheduleSlot> findByStaffIdAndScheduled(Long staffId, boolean scheduled);
 
 }

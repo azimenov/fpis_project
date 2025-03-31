@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @Builder
@@ -21,4 +23,7 @@ public class Staff {
     @ManyToOne
     @JoinColumn(name = "business_id")
     private Business business;
+
+    @ManyToMany(mappedBy = "staff")
+    private List<Service> services;
 }

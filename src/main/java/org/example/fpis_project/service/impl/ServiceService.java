@@ -39,7 +39,7 @@ public class ServiceService {
                 .highestPrice(serviceDto.getHighestPrice())
                 .duration(serviceDto.getDuration())
                 .topic(serviceDto.getTopic())
-                .staff(staff)
+                .staff(List.of(staff))
                 .business(business)
                 .build();
 

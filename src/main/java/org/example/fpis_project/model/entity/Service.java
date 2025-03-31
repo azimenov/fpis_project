@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Data
@@ -30,9 +31,13 @@ public class Service {
 
     private String topic;
 
-    @ManyToOne
-    @JoinColumn(name = "staff_id", nullable = false)
-    private Staff staff;
+    @ManyToMany
+    @JoinTable(
+            name = "staff_service",
+            joinColumns = @JoinColumn(name = "service_id"),
+            inverseJoinColumns = @JoinColumn(name = "staff_id")
+    )
+    private List<Staff> staff;
 
     @ManyToOne
     @JoinColumn(name = "business_id", nullable = false)
