@@ -20,7 +20,7 @@ public class ServiceController {
     private final ServiceService serviceService;
 
     @GetMapping("/{businessId}")
-    public List<Service> getServices(
+    public List<ServiceDto> getServices(
             @PathVariable Long businessId
     ) {
         return serviceService.getAllServices(businessId);

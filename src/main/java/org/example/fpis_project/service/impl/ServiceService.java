@@ -10,6 +10,7 @@ import org.example.fpis_project.repository.ServiceRepository;
 import org.example.fpis_project.repository.StaffRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @org.springframework.stereotype.Service
 @RequiredArgsConstructor
@@ -19,8 +20,22 @@ public class ServiceService {
     private final StaffRepository staffRepository;
     private final BusinessRepository businessRepository;
 
-    public List<Service> getAllServices(Long businessId) {
-        return serviceRepository.findAllByBusinessId(businessId);
+    public List<ServiceDto> getAllServices(Long businessId) {
+        return serviceRepository.findAllByBusinessId(businessId).stream().map(
+                this::mapToServiceDto
+        ).collect(Collectors.toList());
+    }
+
+    private ServiceDto mapToServiceDto(org.example.fpis_project.model.entity.Service service) {
+        return ServiceDto.builder()
+                .name(service.getName())
+                .lowestPrice(service.getLowestPrice())
+                .highestPrice(service.getHighestPrice())
+                .duration(service.getDuration())
+                .topic(service.getTopic())
+                .businessId(service.getBusiness().getId())
+                .staffNames(service.getStaff().stream().map(Staff::getName).collect(Collectors.toList()))
+                .build();
     }
 
     public void createService(ServiceDto serviceDto) {
