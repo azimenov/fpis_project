@@ -1,5 +1,6 @@
 package org.example.fpis_project.service.impl;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.example.fpis_project.model.entity.Staff;
 import org.example.fpis_project.model.entity.WorkingSchedule;
@@ -18,21 +19,26 @@ public class StaffService {
 
     private final StaffRepository repository;
     private final WorkingScheduleRepository workingScheduleRepository;
+    private final StaffRepository staffRepository;
 
     public List<Staff> getServices(Long businessId) {
         return repository.findByBusinessId(businessId);
     }
 
-    private void generateDefaultSchedule(Staff staff) {
-        List<WorkingSchedule> schedules = new ArrayList<>();
-        for (DayOfWeek day : DayOfWeek.values()) {
-            schedules.add(WorkingSchedule.builder()
-                    .staff(staff)
-                    .dayOfWeek(day)
-                    .startTime(LocalTime.of(9, 0))  // Начало рабочего дня
-                    .endTime(LocalTime.of(18, 0))  // Конец рабочего дня
-                    .build());
+    @PostConstruct
+    private void generateDefaultSchedule() {
+        List<Staff> staffList = staffRepository.findAll();
+        for (Staff staff : staffList) {
+            List<WorkingSchedule> schedules = new ArrayList<>();
+            for (DayOfWeek day : DayOfWeek.values()) {
+                schedules.add(WorkingSchedule.builder()
+                        .staff(staff)
+                        .dayOfWeek(day)
+                        .startTime(LocalTime.of(9, 0))  // Начало рабочего дня
+                        .endTime(LocalTime.of(18, 0))  // Конец рабочего дня
+                        .build());
+            }
+            workingScheduleRepository.saveAll(schedules);
         }
-        workingScheduleRepository.saveAll(schedules);
     }
 }
