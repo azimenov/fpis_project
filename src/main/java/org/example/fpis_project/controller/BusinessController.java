@@ -1,6 +1,7 @@
 package org.example.fpis_project.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.fpis_project.model.dto.BusinessDto;
 import org.example.fpis_project.model.entity.Business;
 import org.example.fpis_project.service.BusinessService;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class BusinessController {
     private final BusinessService businessService;
 
     @GetMapping
-    public List<Business> getAllBusinesses() {
+    public List<BusinessDto> getAllBusinesses() {
         return businessService.getAllBusinesses();
     }
 
