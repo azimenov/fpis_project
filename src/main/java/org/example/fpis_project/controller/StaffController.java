@@ -1,6 +1,7 @@
 package org.example.fpis_project.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.fpis_project.model.dto.StaffDto;
 import org.example.fpis_project.model.entity.Staff;
 import org.example.fpis_project.service.impl.StaffService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,7 @@ public class StaffController {
     private final StaffService service;
 
     @GetMapping("/{businessId}")
-    public List<Staff> getServices(
+    public List<StaffDto> getServices(
             @PathVariable("businessId") Long businessId
     ) {
         return service.getServices(businessId);
