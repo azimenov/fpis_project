@@ -18,16 +18,16 @@ public class AuthService {
     public void registerUser(RegisterRequest request) {
 
         User user = User.builder()
-                .email(request.getEmail())
+                .phoneNumber(request.getPhoneNumber())
                 .fullname(request.getUsername())
-                .password(request.getPassword())
+                .password(passwordEncoder.encode(request.getPassword()))
                 .build();
 
         userRepository.save(user);
     }
 
     public User authenticate(LoginRequest loginRequest) {
-        User user = userRepository.findByEmail(loginRequest.getEmail());
+        User user = userRepository.findByFullname(loginRequest.getUsername());
 
         if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             System.out.println("Invalid credentials");
