@@ -21,13 +21,6 @@ public class ServiceController {
 
     private final ServiceService serviceService;
 
-    @GetMapping("/v1/{businessId}")
-    public List<ServiceDto> getServices(
-            @PathVariable Long businessId
-    ) {
-        return serviceService.getAllServices(businessId);
-    }
-
     @GetMapping("/{serviceId}")
     public ServiceDto getService(@PathVariable Long serviceId) {
         return serviceService.getServiceById(serviceId);

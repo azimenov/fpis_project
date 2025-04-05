@@ -2,7 +2,6 @@ package org.example.fpis_project.service.impl;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.example.fpis_project.model.dto.ServiceDto;
 import org.example.fpis_project.model.dto.StaffDto;
 import org.example.fpis_project.model.entity.Staff;
 import org.example.fpis_project.model.entity.WorkingSchedule;
@@ -26,7 +25,7 @@ public class StaffService {
     private final WorkingScheduleRepository workingScheduleRepository;
     private final StaffRepository staffRepository;
 
-    public List<StaffDto> getServices(Long businessId) {
+    public List<StaffDto> getStaffByBusinessId(Long businessId) {
         return repository.findByBusinessId(businessId).stream()
                 .map(DtoMapperUtil::mapToStaffDto)
                 .collect(Collectors.toList());
