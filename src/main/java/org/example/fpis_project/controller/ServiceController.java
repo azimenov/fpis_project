@@ -21,7 +21,7 @@ public class ServiceController {
 
     private final ServiceService serviceService;
 
-    @GetMapping("/{businessId}")
+    @GetMapping("/v1/{businessId}")
     public List<ServiceDto> getServices(
             @PathVariable Long businessId
     ) {
