@@ -39,6 +39,10 @@ public class ServiceService {
                 .build();
     }
 
+    public ServiceDto getServiceById(Long serviceId) {
+        return mapToServiceDto(serviceRepository.findServiceById(serviceId));
+    }
+
     public void createService(ServiceDto serviceDto) {
 
         Staff staff = staffRepository.findByNameAndBusinessId(

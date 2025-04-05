@@ -14,6 +14,7 @@ import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +29,11 @@ public class StaffService {
         return repository.findByBusinessId(businessId).stream()
                 .map(this::mapToStaffDto)
                 .collect(Collectors.toList());
+    }
+
+
+    public StaffDto getStaff(Long id) {
+        return mapToStaffDto(Objects.requireNonNull(staffRepository.findById(id).orElse(null)));
     }
 
     private StaffDto mapToStaffDto(Staff staff) {

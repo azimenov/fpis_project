@@ -28,6 +28,11 @@ public class ServiceController {
         return serviceService.getAllServices(businessId);
     }
 
+    @GetMapping("/{serviceId}")
+    public ServiceDto getService(@PathVariable Long serviceId) {
+        return serviceService.getServiceById(serviceId);
+    }
+
     @PostMapping
     public ResponseEntity<?> createService(@RequestBody ServiceDto serviceDto) {
         serviceService.createService(serviceDto);
