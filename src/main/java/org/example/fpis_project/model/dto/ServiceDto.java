@@ -26,7 +26,7 @@ public class ServiceDto {
 
     private String topic;
 
-    private List<String> staffNames;
+    private List<Long> staffIds;
 
     private Long businessId;
 }

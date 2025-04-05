@@ -7,6 +7,7 @@ import org.example.fpis_project.model.entity.Business;
 import org.example.fpis_project.model.entity.Staff;
 import org.example.fpis_project.repository.BusinessRepository;
 import org.example.fpis_project.service.BusinessService;
+import org.example.fpis_project.util.DtoMapperUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,42 +24,17 @@ public class DefaultBusinessService implements BusinessService {
     public List<BusinessDto> getAllBusinesses() {
         return businessRepository.findAll()
                 .stream()
-                .map(this::mapToBusinessDto).collect(Collectors.toList());
-    }
-
-    private BusinessDto mapToBusinessDto(Business business) {
-        return BusinessDto.builder()
-                .id(business.getId())
-                .name(business.getName())
-                .address(business.getAddress())
-                .phone(business.getPhone())
-                .services(
-                        business.getServices().stream().map(this::mapToServiceDto).collect(Collectors.toList())
-                )
-                .build();
-    }
-
-    private ServiceDto mapToServiceDto(org.example.fpis_project.model.entity.Service service) {
-        return ServiceDto.builder()
-                .id(service.getId())
-                .name(service.getName())
-                .lowestPrice(service.getLowestPrice())
-                .highestPrice(service.getHighestPrice())
-                .duration(service.getDuration())
-                .topic(service.getTopic())
-                .businessId(service.getBusiness().getId())
-                .staffNames(service.getStaff().stream().map(Staff::getName).collect(Collectors.toList()))
-                .build();
+                .map(DtoMapperUtil::mapToBusinessDto).collect(Collectors.toList());
     }
 
     @Override
     public Optional<BusinessDto> getBusinessById(Long id) {
-        return businessRepository.findById(id).map(this::mapToBusinessDto);
+        return businessRepository.findById(id).map(DtoMapperUtil::mapToBusinessDto);
     }
 
     @Override
     public BusinessDto createBusiness(Business business) {
-        return mapToBusinessDto(businessRepository.save(business));
+        return DtoMapperUtil.mapToBusinessDto(businessRepository.save(business));
     }
 
     @Override

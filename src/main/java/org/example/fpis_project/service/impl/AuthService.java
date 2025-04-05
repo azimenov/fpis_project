@@ -16,7 +16,6 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
 
     public void registerUser(RegisterRequest request) {
-
         User user = User.builder()
                 .phoneNumber(request.getPhoneNumber())
                 .fullname(request.getUsername())

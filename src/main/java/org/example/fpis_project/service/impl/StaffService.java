@@ -8,6 +8,7 @@ import org.example.fpis_project.model.entity.Staff;
 import org.example.fpis_project.model.entity.WorkingSchedule;
 import org.example.fpis_project.repository.StaffRepository;
 import org.example.fpis_project.repository.WorkingScheduleRepository;
+import org.example.fpis_project.util.DtoMapperUtil;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
@@ -27,36 +28,13 @@ public class StaffService {
 
     public List<StaffDto> getServices(Long businessId) {
         return repository.findByBusinessId(businessId).stream()
-                .map(this::mapToStaffDto)
+                .map(DtoMapperUtil::mapToStaffDto)
                 .collect(Collectors.toList());
     }
 
 
     public StaffDto getStaff(Long id) {
-        return mapToStaffDto(Objects.requireNonNull(staffRepository.findById(id).orElse(null)));
-    }
-
-    private StaffDto mapToStaffDto(Staff staff) {
-        return StaffDto.builder()
-                .id(staff.getId())
-                .name(staff.getName())
-                .position(staff.getPosition())
-                .businessId(staff.getBusiness().getId())
-                .services(staff.getServices().stream().map(this::mapToServiceDto).collect(Collectors.toList()))
-                .build();
-    }
-
-    private ServiceDto mapToServiceDto(org.example.fpis_project.model.entity.Service service) {
-        return ServiceDto.builder()
-                .id(service.getId())
-                .name(service.getName())
-                .lowestPrice(service.getLowestPrice())
-                .highestPrice(service.getHighestPrice())
-                .duration(service.getDuration())
-                .topic(service.getTopic())
-                .businessId(service.getBusiness().getId())
-                .staffNames(service.getStaff().stream().map(Staff::getName).collect(Collectors.toList()))
-                .build();
+        return DtoMapperUtil.mapToStaffDto(Objects.requireNonNull(staffRepository.findById(id).orElse(null)));
     }
 
     @PostConstruct

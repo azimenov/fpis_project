@@ -8,6 +8,7 @@ import org.example.fpis_project.model.entity.Staff;
 import org.example.fpis_project.repository.BusinessRepository;
 import org.example.fpis_project.repository.ServiceRepository;
 import org.example.fpis_project.repository.StaffRepository;
+import org.example.fpis_project.util.DtoMapperUtil;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,29 +23,15 @@ public class ServiceService {
 
     public List<ServiceDto> getAllServices(Long businessId) {
         return serviceRepository.findAllByBusinessId(businessId).stream().map(
-                this::mapToServiceDto
+                DtoMapperUtil::mapToServiceDto
         ).collect(Collectors.toList());
     }
 
-    private ServiceDto mapToServiceDto(org.example.fpis_project.model.entity.Service service) {
-        return ServiceDto.builder()
-                .id(service.getId())
-                .name(service.getName())
-                .lowestPrice(service.getLowestPrice())
-                .highestPrice(service.getHighestPrice())
-                .duration(service.getDuration())
-                .topic(service.getTopic())
-                .businessId(service.getBusiness().getId())
-                .staffNames(service.getStaff().stream().map(Staff::getName).collect(Collectors.toList()))
-                .build();
-    }
-
     public ServiceDto getServiceById(Long serviceId) {
-        return mapToServiceDto(serviceRepository.findServiceById(serviceId));
+        return DtoMapperUtil.mapToServiceDto(serviceRepository.findServiceById(serviceId));
     }
 
     public void createService(ServiceDto serviceDto) {
-
         Staff staff = staffRepository.findByNameAndBusinessId(
                 serviceDto.getName(),
                 serviceDto.getBusinessId()
