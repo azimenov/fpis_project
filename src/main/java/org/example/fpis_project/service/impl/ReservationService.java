@@ -149,4 +149,28 @@ public class ReservationService {
                 .notes(reservation.getNotes())
                 .build();
     }
+
+    public List<ReservationDto> getCurrentReservations(String email) {
+        // Business logic moved here
+        LocalDateTime now = LocalDateTime.now();
+
+        List<Reservation> upcomingReservations = reservationRepository
+                .findByCustomerEmailAndStartTimeGreaterThanEqualOrderByStartTimeAsc(email, now);
+
+        return upcomingReservations.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<ReservationDto> getReservationHistory(String email) {
+        // Business logic moved here
+        LocalDateTime now = LocalDateTime.now();
+
+        List<Reservation> pastReservations = reservationRepository
+                .findByCustomerEmailAndStartTimeLessThanOrderByStartTimeDesc(email, now);
+
+        return pastReservations.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
 }

@@ -1,6 +1,7 @@
 package org.example.fpis_project.controller;
 
 import jakarta.validation.Valid;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.example.fpis_project.model.entity.ReservationDto;
 import org.example.fpis_project.service.impl.ReservationService;
@@ -46,4 +47,13 @@ public class ReservationController {
         return ResponseEntity.ok(reservationService.getStaffAvailability(staffId, date));
     }
 
+    @GetMapping("/client/current")
+    public ResponseEntity<List<ReservationDto>> getCurrentReservations(@RequestParam String email) {
+        return ResponseEntity.ok(reservationService.getCurrentReservations(email));
+    }
+
+    @GetMapping("/client/history")
+    public ResponseEntity<List<ReservationDto>> getReservationHistory(@RequestParam String email) {
+        return ResponseEntity.ok(reservationService.getReservationHistory(email));
+    }
 }
