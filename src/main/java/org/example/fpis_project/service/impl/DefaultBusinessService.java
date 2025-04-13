@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.example.fpis_project.model.dto.BusinessDto;
 import org.example.fpis_project.model.entity.Business;
+import org.example.fpis_project.model.entity.Role;
 import org.example.fpis_project.model.entity.User;
 import org.example.fpis_project.repository.BusinessRepository;
 import org.example.fpis_project.repository.UserRepository;
@@ -38,6 +39,9 @@ public class DefaultBusinessService implements BusinessService {
     public BusinessDto createBusiness(BusinessDto businessDto) {
         User owner = userRepository.findById(businessDto.getOwnerId())
                 .orElseThrow(() -> new EntityNotFoundException("User not found: " + businessDto.getOwnerId()));
+
+        owner.setRole(Role.OWNER);
+        userRepository.save(owner);
 
         Business business = Business.builder()
                 .name(businessDto.getName())
