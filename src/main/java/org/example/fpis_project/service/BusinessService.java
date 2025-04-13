@@ -11,7 +11,10 @@ public interface BusinessService {
 
     Optional<BusinessDto> getBusinessById(Long id);
 
-    BusinessDto createBusiness(Business business);
+    BusinessDto createBusiness(BusinessDto business);
 
     void deleteBusiness(Long id);
+
+    BusinessDto updateBusiness(BusinessDto business);
+
 }

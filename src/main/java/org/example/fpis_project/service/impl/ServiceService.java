@@ -1,6 +1,8 @@
 package org.example.fpis_project.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.example.fpis_project.model.dto.ServiceCreationDto;
 import org.example.fpis_project.model.dto.ServiceDto;
 import org.example.fpis_project.model.entity.Business;
 import org.example.fpis_project.model.entity.Service;
@@ -10,6 +12,7 @@ import org.example.fpis_project.repository.ServiceRepository;
 import org.example.fpis_project.repository.StaffRepository;
 import org.example.fpis_project.util.DtoMapperUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,13 +34,18 @@ public class ServiceService {
         return DtoMapperUtil.mapToServiceDto(serviceRepository.findServiceById(serviceId));
     }
 
-    public void createService(ServiceDto serviceDto) {
-        Staff staff = staffRepository.findByNameAndBusinessId(
-                serviceDto.getName(),
-                serviceDto.getBusinessId()
-        );
+    public ServiceDto createService(ServiceDto serviceDto) {
+        Business business = businessRepository.findById(serviceDto.getBusinessId())
+                .orElseThrow(() -> new EntityNotFoundException("Business not found with ID: " + serviceDto.getBusinessId()));
 
-        Business business = businessRepository.findById(serviceDto.getBusinessId()).get();
+        List<Staff> staffList = new ArrayList<>();
+
+        for (Long staffId : serviceDto.getStaffIds()) {
+            Staff staff = staffRepository.findById(staffId)
+                    .orElseThrow(() -> new EntityNotFoundException("Staff not found with ID: " + staffId));
+
+            staffList.add(staff);
+        }
 
         Service newService = Service
                 .builder()
@@ -46,10 +54,44 @@ public class ServiceService {
                 .highestPrice(serviceDto.getHighestPrice())
                 .duration(serviceDto.getDuration())
                 .topic(serviceDto.getTopic())
-                .staff(List.of(staff))
                 .business(business)
+                .staff(staffList)
                 .build();
 
-        serviceRepository.save(newService);
+        return DtoMapperUtil.mapToServiceDto(serviceRepository.save(newService));
+    }
+
+    public ServiceDto updateService(ServiceDto serviceDto) {
+        Service existingService = serviceRepository.findById(serviceDto.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Service not found with ID: " + serviceDto.getId()));
+
+        Business business = null;
+        if (!existingService.getBusiness().getId().equals(serviceDto.getBusinessId())) {
+            business = businessRepository.findById(serviceDto.getBusinessId())
+                    .orElseThrow(() -> new EntityNotFoundException("Business not found with ID: " + serviceDto.getBusinessId()));
+        } else {
+            business = existingService.getBusiness();
+        }
+
+        List<Staff> staffList = new ArrayList<>();
+        for (Long staffId : serviceDto.getStaffIds()) {
+            Staff staff = staffRepository.findById(staffId)
+                    .orElseThrow(() -> new EntityNotFoundException("Staff not found with ID: " + staffId));
+            staffList.add(staff);
+        }
+        existingService.setId(serviceDto.getId());
+        existingService.setName(serviceDto.getName());
+        existingService.setLowestPrice(serviceDto.getLowestPrice());
+        existingService.setHighestPrice(serviceDto.getHighestPrice());
+        existingService.setDuration(serviceDto.getDuration());
+        existingService.setTopic(serviceDto.getTopic());
+        existingService.setBusiness(business);
+        existingService.setStaff(staffList);
+
+        return DtoMapperUtil.mapToServiceDto(serviceRepository.save(existingService));
+    }
+
+    public void deleteService(Long serviceId) {
+        serviceRepository.deleteById(serviceId);
     }
 }

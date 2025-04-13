@@ -37,18 +37,20 @@ public class ScheduleSlotService {
                 LocalDateTime potentialEnd = currentStart.plusMinutes(60);
 
                 LocalDateTime finalCurrentStart = currentStart;
-                boolean isOverlapping = bookedSlots.stream().anyMatch(slot ->
-                        slot.getStartTime().isBefore(potentialEnd) && slot.getEndTime().isAfter(finalCurrentStart));
+                boolean isOverlapping = bookedSlots.stream().anyMatch(
+                        slot -> slot.getStartTime().isBefore(potentialEnd)
+                                && slot.getEndTime().isAfter(finalCurrentStart));
 
                 if (!isOverlapping) {
-                    availableSlots.add(ScheduleSlot.builder()
-                            .staff(Staff.builder()
-                                    .id(staffId)
-                                    .build())
-                            .startTime(currentStart)
-                            .endTime(potentialEnd)
-                            .scheduled(false)
-                            .build());
+                    availableSlots.add(
+                            ScheduleSlot.builder()
+                                .staff(Staff.builder()
+                                        .id(staffId)
+                                        .build())
+                                .startTime(currentStart)
+                                .endTime(potentialEnd)
+                                .scheduled(false)
+                                .build());
                 }
 
                 currentStart = currentStart.plusMinutes(60);

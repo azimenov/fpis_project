@@ -6,13 +6,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
-public class BusinessDto {
+@NoArgsConstructor
+@AllArgsConstructor
+public class ServiceCreationDto {
 
     private Long id;
 
@@ -20,13 +21,20 @@ public class BusinessDto {
     private String name;
 
     @NotNull
-    private String address;
+    private BigDecimal lowestPrice;
 
     @NotNull
-    private String phone;
+    private BigDecimal highestPrice;
 
     @NotNull
-    private String description;
+    private Integer duration;
 
-    private List<ServiceDto> services;
+    @NotNull
+    private String topic;
+
+    @NotNull
+    private Long staffId;
+
+    @NotNull
+    private Long businessId;
 }

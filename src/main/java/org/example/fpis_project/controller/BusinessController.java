@@ -1,5 +1,6 @@
 package org.example.fpis_project.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.fpis_project.model.dto.BusinessDto;
 import org.example.fpis_project.model.dto.ServiceDto;
@@ -22,19 +23,24 @@ public class BusinessController {
     private final ServiceService serviceService;
     private final StaffService staffService;
 
+    @PostMapping
+    public BusinessDto createBusiness(@RequestBody @Valid BusinessDto business) {
+        return businessService.createBusiness(business);
+    }
+
     @GetMapping
     public List<BusinessDto> getAllBusinesses() {
         return businessService.getAllBusinesses();
     }
 
+    @PutMapping
+    public BusinessDto updateBusiness(@RequestBody @Valid BusinessDto business) {
+        return businessService.updateBusiness(business);
+    }
+
     @GetMapping("/{id}")
     public Optional<BusinessDto> getBusinessById(@PathVariable Long id) {
         return businessService.getBusinessById(id);
-    }
-
-    @PostMapping
-    public BusinessDto createBusiness(@RequestBody Business business) {
-        return businessService.createBusiness(business);
     }
 
     @DeleteMapping("/{id}")

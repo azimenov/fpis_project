@@ -1,10 +1,13 @@
 package org.example.fpis_project.service.impl;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.example.fpis_project.model.dto.StaffDto;
+import org.example.fpis_project.model.entity.Business;
 import org.example.fpis_project.model.entity.Staff;
 import org.example.fpis_project.model.entity.WorkingSchedule;
+import org.example.fpis_project.repository.BusinessRepository;
 import org.example.fpis_project.repository.StaffRepository;
 import org.example.fpis_project.repository.WorkingScheduleRepository;
 import org.example.fpis_project.util.DtoMapperUtil;
@@ -22,8 +25,8 @@ import java.util.stream.Collectors;
 public class StaffService {
 
     private final StaffRepository repository;
-    private final WorkingScheduleRepository workingScheduleRepository;
     private final StaffRepository staffRepository;
+    private final BusinessRepository businessRepository;
 
     public List<StaffDto> getStaffByBusinessId(Long businessId) {
         return repository.findByBusinessId(businessId).stream()
@@ -36,20 +39,23 @@ public class StaffService {
         return DtoMapperUtil.mapToStaffDto(Objects.requireNonNull(staffRepository.findById(id).orElse(null)));
     }
 
-    @PostConstruct
-    private void generateDefaultSchedule() {
-        List<Staff> staffList = staffRepository.findAll();
-        for (Staff staff : staffList) {
-            List<WorkingSchedule> schedules = new ArrayList<>();
-            for (DayOfWeek day : DayOfWeek.values()) {
-                schedules.add(WorkingSchedule.builder()
-                        .staff(staff)
-                        .dayOfWeek(day)
-                        .startTime(LocalTime.of(9, 0))  // Начало рабочего дня
-                        .endTime(LocalTime.of(18, 0))  // Конец рабочего дня
-                        .build());
-            }
-            workingScheduleRepository.saveAll(schedules);
-        }
+    public StaffDto createStaff(StaffDto staffDto) {
+        Business business = businessRepository.findById(staffDto.getBusinessId())
+                .orElseThrow(() -> new EntityNotFoundException("Business not found with ID: " + staffDto.getBusinessId()));
+
+
+        Staff staff = Staff.builder()
+                .name(staffDto.getName())
+                .surname(staffDto.getSurname())
+                .position(staffDto.getPosition())
+                .position(staffDto.getPosition())
+                .phone(staffDto.getPhone())
+                .description(staffDto.getDescription())
+                .business(business)
+                .build();
+
+        staffRepository.save(staff);
+
+        return DtoMapperUtil.mapToStaffDto(staff);
     }
 }

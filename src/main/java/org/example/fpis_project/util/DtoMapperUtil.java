@@ -4,8 +4,10 @@ import org.example.fpis_project.model.dto.BusinessDto;
 import org.example.fpis_project.model.dto.ServiceDto;
 import org.example.fpis_project.model.dto.StaffDto;
 import org.example.fpis_project.model.entity.Business;
+import org.example.fpis_project.model.entity.Service;
 import org.example.fpis_project.model.entity.Staff;
 
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 public class DtoMapperUtil {
@@ -16,8 +18,11 @@ public class DtoMapperUtil {
                 .name(business.getName())
                 .address(business.getAddress())
                 .phone(business.getPhone())
+                .description(business.getDescription())
                 .services(
-                        business.getServices().stream().map(DtoMapperUtil::mapToServiceDto).collect(Collectors.toList())
+                        business.getServices() != null
+                                ? business.getServices().stream().map(DtoMapperUtil::mapToServiceDto).collect(Collectors.toList())
+                                : Collections.emptyList()
                 )
                 .build();
     }
@@ -41,7 +46,11 @@ public class DtoMapperUtil {
                 .name(staff.getName())
                 .position(staff.getPosition())
                 .businessId(staff.getBusiness().getId())
-                .services(staff.getServices().stream().map(DtoMapperUtil::mapToServiceDto).collect(Collectors.toList()))
+                .services(
+                        staff.getServices() != null
+                                ? staff.getServices().stream().map(DtoMapperUtil::mapToServiceDto).collect(Collectors.toList())
+                                : Collections.emptyList()
+                )
                 .build();
     }
 }

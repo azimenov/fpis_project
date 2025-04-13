@@ -1,5 +1,6 @@
 package org.example.fpis_project.model.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,9 +15,17 @@ import java.util.List;
 public class StaffDto {
 
     private Long id;
-    private String name;
-    private String position;
 
+    @NotNull
+    private String name;
+    private String surname;
+
+    @NotNull
+    private String position;
+    private String phone;
+    private String description;
+
+    @NotNull
     private Long businessId;
 
     private List<ServiceDto> services;

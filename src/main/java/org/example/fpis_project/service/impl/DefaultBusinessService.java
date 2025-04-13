@@ -33,12 +33,33 @@ public class DefaultBusinessService implements BusinessService {
     }
 
     @Override
-    public BusinessDto createBusiness(Business business) {
+    public BusinessDto createBusiness(BusinessDto businessDto) {
+        Business business = Business.builder()
+                .name(businessDto.getName())
+                .address(businessDto.getAddress())
+                .phone(businessDto.getPhone())
+                .description(businessDto.getDescription())
+                .build();
+
         return DtoMapperUtil.mapToBusinessDto(businessRepository.save(business));
     }
+
 
     @Override
     public void deleteBusiness(Long id) {
         businessRepository.deleteById(id);
+    }
+
+    @Override
+    public BusinessDto updateBusiness(BusinessDto businessDto) {
+        Business business = Business.builder()
+                .id(businessDto.getId())
+                .name(businessDto.getName())
+                .address(businessDto.getAddress())
+                .phone(businessDto.getPhone())
+                .description(businessDto.getDescription())
+                .build();
+
+        return DtoMapperUtil.mapToBusinessDto(businessRepository.save(business));
     }
 }

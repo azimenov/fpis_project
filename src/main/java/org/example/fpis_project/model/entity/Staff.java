@@ -1,6 +1,7 @@
 package org.example.fpis_project.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,12 +14,15 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Staff {
+public class    Staff {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String surname;
     private String position;
+    private String phone;
+    private String description;
 
     @ManyToOne
     @JoinColumn(name = "business_id")
