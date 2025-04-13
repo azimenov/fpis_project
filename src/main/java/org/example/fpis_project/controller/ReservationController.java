@@ -34,7 +34,6 @@ public class ReservationController {
             @RequestParam Long serviceId,
             @RequestParam Long staffId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-
         return ResponseEntity.ok(reservationService.getAvailableTimeSlots(
                 businessId, serviceId, staffId, date));
     }

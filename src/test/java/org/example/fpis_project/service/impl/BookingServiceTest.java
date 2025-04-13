@@ -1,10 +1,8 @@
 package org.example.fpis_project.service.impl;
 
-import org.example.fpis_project.model.entity.Booking;
 import org.example.fpis_project.model.entity.Service;
 import org.example.fpis_project.model.entity.Staff;
 import org.example.fpis_project.model.entity.User;
-import org.example.fpis_project.repository.BookingRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
