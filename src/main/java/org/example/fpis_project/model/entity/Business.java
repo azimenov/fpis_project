@@ -26,6 +26,8 @@ public class Business {
 
     private String description;
 
+    private String topic;
+
     @OneToMany(mappedBy = "business", cascade = CascadeType.ALL)
     private List<Service> services;
 }

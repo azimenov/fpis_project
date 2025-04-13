@@ -37,6 +37,7 @@ public class DefaultBusinessService implements BusinessService {
                 .address(businessDto.getAddress())
                 .phone(businessDto.getPhone())
                 .description(businessDto.getDescription())
+                .topic(businessDto.getTopic())
                 .build();
 
         return DtoMapperUtil.mapToBusinessDto(businessRepository.save(business));
@@ -56,6 +57,7 @@ public class DefaultBusinessService implements BusinessService {
                 .address(businessDto.getAddress())
                 .phone(businessDto.getPhone())
                 .description(businessDto.getDescription())
+                .topic(businessDto.getTopic())
                 .build();
 
         return DtoMapperUtil.mapToBusinessDto(businessRepository.save(business));

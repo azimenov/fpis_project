@@ -28,5 +28,8 @@ public class BusinessDto {
     @NotNull
     private String description;
 
+    @NotNull
+    private String topic;
+
     private List<ServiceDto> services;
 }

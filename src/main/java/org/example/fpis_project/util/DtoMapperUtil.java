@@ -4,7 +4,6 @@ import org.example.fpis_project.model.dto.BusinessDto;
 import org.example.fpis_project.model.dto.ServiceDto;
 import org.example.fpis_project.model.dto.StaffDto;
 import org.example.fpis_project.model.entity.Business;
-import org.example.fpis_project.model.entity.Service;
 import org.example.fpis_project.model.entity.Staff;
 
 import java.util.Collections;
@@ -19,6 +18,7 @@ public class DtoMapperUtil {
                 .address(business.getAddress())
                 .phone(business.getPhone())
                 .description(business.getDescription())
+                .topic(business.getTopic())
                 .services(
                         business.getServices() != null
                                 ? business.getServices().stream().map(DtoMapperUtil::mapToServiceDto).collect(Collectors.toList())
