@@ -1,21 +1,14 @@
 package org.example.fpis_project.service.impl;
 
-import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.example.fpis_project.model.dto.StaffDto;
 import org.example.fpis_project.model.entity.Business;
 import org.example.fpis_project.model.entity.Staff;
-import org.example.fpis_project.model.entity.WorkingSchedule;
-import org.example.fpis_project.repository.BusinessRepository;
 import org.example.fpis_project.repository.StaffRepository;
-import org.example.fpis_project.repository.WorkingScheduleRepository;
 import org.example.fpis_project.util.DtoMapperUtil;
 import org.springframework.stereotype.Service;
 
-import java.time.DayOfWeek;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
