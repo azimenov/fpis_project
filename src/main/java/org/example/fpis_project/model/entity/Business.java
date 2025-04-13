@@ -28,6 +28,9 @@ public class Business {
 
     private String topic;
 
+    @ManyToOne
+    private User owner;
+
     @OneToMany(mappedBy = "business", cascade = CascadeType.ALL)
     private List<Service> services;
 }

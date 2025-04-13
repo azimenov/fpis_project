@@ -31,5 +31,8 @@ public class BusinessDto {
     @NotNull
     private String topic;
 
+    @NotNull
+    private Long ownerId;
+
     private List<ServiceDto> services;
 }

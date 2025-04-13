@@ -6,6 +6,7 @@ import org.example.fpis_project.model.dto.BusinessDto;
 import org.example.fpis_project.model.dto.ServiceDto;
 import org.example.fpis_project.model.dto.StaffDto;
 import org.example.fpis_project.model.entity.Business;
+import org.example.fpis_project.model.entity.User;
 import org.example.fpis_project.service.BusinessService;
 import org.example.fpis_project.service.impl.ServiceService;
 import org.example.fpis_project.service.impl.StaffService;
@@ -56,5 +57,12 @@ public class BusinessController {
     @GetMapping("/staff/{businessId}")
     public List<StaffDto> getStaffById(@PathVariable Long businessId) {
         return staffService.getStaffByBusinessId(businessId);
+    }
+
+    @GetMapping("/owner")
+    public User getOwner(
+            @RequestParam Long businessId
+    ) {
+        return businessService.getOwner(businessId);
     }
 }

@@ -24,6 +24,7 @@ public class DtoMapperUtil {
                                 ? business.getServices().stream().map(DtoMapperUtil::mapToServiceDto).collect(Collectors.toList())
                                 : Collections.emptyList()
                 )
+                .ownerId(business.getOwner().getId())
                 .build();
     }
 
