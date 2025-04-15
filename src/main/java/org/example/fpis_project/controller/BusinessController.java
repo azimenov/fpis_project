@@ -65,7 +65,7 @@ public class BusinessController {
         return businessService.getOwnerByBusinessId(businessId);
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/owner/{userId}")
     public BusinessDto getBusinessByUserId(@PathVariable Long userId) {
         return businessService.getBusinessByUserId(userId);
     }
