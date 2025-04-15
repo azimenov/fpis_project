@@ -151,7 +151,6 @@ public class ReservationService {
     }
 
     public List<ReservationDto> getCurrentReservations(String email) {
-        // Business logic moved here
         LocalDateTime now = LocalDateTime.now();
 
         List<Reservation> upcomingReservations = reservationRepository
@@ -163,7 +162,6 @@ public class ReservationService {
     }
 
     public List<ReservationDto> getReservationHistory(String email) {
-        // Business logic moved here
         LocalDateTime now = LocalDateTime.now();
 
         List<Reservation> pastReservations = reservationRepository
