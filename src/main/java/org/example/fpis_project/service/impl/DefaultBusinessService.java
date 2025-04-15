@@ -80,10 +80,19 @@ public class DefaultBusinessService implements BusinessService {
     }
 
     @Override
-    public User getOwner(Long businessId) {
+    public User getOwnerByBusinessId(Long businessId) {
         Business business = businessRepository.findById(businessId)
                 .orElseThrow(() -> new EntityNotFoundException("Business not found: " + businessId));
 
         return business.getOwner();
+    }
+
+    @Override
+    public BusinessDto getBusinessByUserId(Long userId) {
+        User owner = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
+
+        List<Business> businesses = businessRepository.findAllByOwner(owner);
+        return DtoMapperUtil.mapToBusinessDto(businesses.get(0));
     }
 }

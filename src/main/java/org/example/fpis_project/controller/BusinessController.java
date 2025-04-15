@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.example.fpis_project.model.dto.BusinessDto;
 import org.example.fpis_project.model.dto.ServiceDto;
 import org.example.fpis_project.model.dto.StaffDto;
-import org.example.fpis_project.model.entity.Business;
 import org.example.fpis_project.model.entity.User;
 import org.example.fpis_project.service.BusinessService;
 import org.example.fpis_project.service.impl.ServiceService;
@@ -63,6 +62,11 @@ public class BusinessController {
     public User getOwner(
             @RequestParam Long businessId
     ) {
-        return businessService.getOwner(businessId);
+        return businessService.getOwnerByBusinessId(businessId);
+    }
+
+    @GetMapping("/{userId}")
+    public BusinessDto getBusinessByUserId(@PathVariable Long userId) {
+        return businessService.getBusinessByUserId(userId);
     }
 }
