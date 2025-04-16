@@ -25,9 +25,9 @@ public class StaffService {
     public List<StaffDto> getStaffByBusinessId(Long businessId) {
         return repository.findByBusinessId(businessId).stream()
                 .map(DtoMapperUtil::mapToStaffDto)
-                .collect(Collectors.toList());
+                .sorted()
+                .toList();
     }
-
 
     public StaffDto getStaff(Long id) {
         return DtoMapperUtil.mapToStaffDto(Objects.requireNonNull(staffRepository.findById(id).orElse(null)));
