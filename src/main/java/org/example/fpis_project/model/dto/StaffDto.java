@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StaffDto {
+public class StaffDto implements Comparable<StaffDto> {
 
     private Long id;
 
@@ -29,4 +29,9 @@ public class StaffDto {
     private Long businessId;
 
     private List<ServiceDto> services;
+
+    @Override
+    public int compareTo(StaffDto o) {
+        return name.compareTo(o.name);
+    }
 }
