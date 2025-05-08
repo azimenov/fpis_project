@@ -28,6 +28,7 @@ public class ReservationService {
     private final ServiceRepository serviceRepository;
     private final StaffRepository staffRepository;
     private final BusinessRepository businessRepository;
+    private final NotificationService notificationService;
 
     public List<ReservationDto> getStaffAvailability(Long staffId, LocalDate date) {
         LocalDateTime startOfDay = date.atStartOfDay();
@@ -76,15 +77,8 @@ public class ReservationService {
                 .build();
 
         Reservation savedReservation = reservationRepository.save(reservation);
+        notificationService.sendSimpleMessage(reservationDto.getCustomerEmail(), "reservation created", "your reservation created");
         return convertToDto(savedReservation);
-    }
-
-    private boolean isTimeSlotAvailable(Long staffId, LocalDateTime start, LocalDateTime end) {
-        List<Reservation> existingReservations = reservationRepository.findByStaffIdAndStartTimeBetween(
-                staffId, start.minusMinutes(1), end.plusMinutes(1));
-
-        return existingReservations.stream().noneMatch(reservation ->
-                (start.isBefore(reservation.getEndTime()) && end.isAfter(reservation.getStartTime())));
     }
 
     public List<ReservationDto> getAvailableTimeSlots(Long businessId, Long serviceId, Long staffId, LocalDate date) {
@@ -148,6 +142,14 @@ public class ReservationService {
                 .status(reservation.getStatus())
                 .notes(reservation.getNotes())
                 .build();
+    }
+
+    private boolean isTimeSlotAvailable(Long staffId, LocalDateTime start, LocalDateTime end) {
+        List<Reservation> existingReservations = reservationRepository.findByStaffIdAndStartTimeBetween(
+                staffId, start.minusMinutes(1), end.plusMinutes(1));
+
+        return existingReservations.stream().noneMatch(reservation ->
+                (start.isBefore(reservation.getEndTime()) && end.isAfter(reservation.getStartTime())));
     }
 
     public List<ReservationDto> getCurrentReservations(String email) {
