@@ -12,4 +12,7 @@ public interface ServiceRepository extends JpaRepository<Service, Long> {
     List<Service> findAllByBusinessId(Long businessId);
 
     Service findServiceById(Long businessId);
+
+    List<Service> findByNameContaining(String searchWord);
+
 }

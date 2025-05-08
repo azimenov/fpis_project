@@ -93,4 +93,10 @@ public class ServiceService {
     public void deleteService(Long serviceId) {
         serviceRepository.deleteById(serviceId);
     }
+
+    public List<ServiceDto> searchServices(String searchWord) {
+        return serviceRepository.findByNameContaining(searchWord).stream().map(
+                DtoMapperUtil::mapToServiceDto
+        ).toList();
+    }
 }

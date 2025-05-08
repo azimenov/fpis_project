@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,6 +36,7 @@ public class ReviewService {
                 .rating(reviewDto.getRating())
                 .comment(reviewDto.getComment())
                 .createdAt(LocalDateTime.now())
+                .isVerified(false)
                 .build();
 
         if (reviewDto.getReservationId() != null) {
@@ -63,6 +65,7 @@ public class ReviewService {
 
         List<Review> reviews = reviewRepository.findByBusinessIdOrderByCreatedAtDesc(businessId);
         return reviews.stream()
+                .filter(Review::isVerified)
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
@@ -127,6 +130,16 @@ public class ReviewService {
         return stats;
     }
 
+    public void verifyReview(Long reviewId) {
+        Optional<Review> review = reviewRepository.findById(reviewId);
+        if (review.isEmpty()) {
+            throw new EntityNotFoundException("Review not found: " + reviewId);
+        }
+
+        review.get().setVerified(true);
+        reviewRepository.save(review.get());
+    }
+
     private ReviewDto convertToDto(Review review) {
         return ReviewDto.builder()
                 .id(review.getId())
@@ -137,6 +150,7 @@ public class ReviewService {
                 .rating(review.getRating())
                 .comment(review.getComment())
                 .createdAt(review.getCreatedAt())
+                .isVerified(review.isVerified())
                 .build();
     }
 }

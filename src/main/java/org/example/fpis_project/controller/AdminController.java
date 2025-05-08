@@ -2,13 +2,11 @@ package org.example.fpis_project.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.fpis_project.model.dto.ReviewDto;
-import org.example.fpis_project.model.entity.ReservationDto;
-import org.example.fpis_project.model.entity.Review;
-import org.example.fpis_project.service.impl.ReservationService;
 import org.example.fpis_project.service.impl.ReviewService;
 import org.example.fpis_project.service.impl.ServiceService;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +28,13 @@ public class AdminController {
             @RequestParam String customerEmail
     ) {
         reviewService.deleteReview(reviewId, customerEmail);
+    }
+
+    @PatchMapping("/review/verify")
+    public void verifyReview(
+            @RequestParam Long reviewId
+    ) {
+        reviewService.verifyReview(reviewId);
     }
 
     @GetMapping("/review/{businessId}")

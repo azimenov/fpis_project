@@ -22,7 +22,6 @@ public class ReviewDto {
     @NotNull
     private Long businessId;
 
-    // Optional: allows reviewing a specific reservation
     private Long reservationId;
 
     @NotBlank
@@ -40,4 +39,6 @@ public class ReviewDto {
     private String comment;
 
     private LocalDateTime createdAt;
+
+    private boolean isVerified;
 }

@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/service")
 @RequiredArgsConstructor
@@ -39,5 +41,10 @@ public class ServiceController {
     @DeleteMapping("/{serviceId}")
     public void deleteService(@PathVariable Long serviceId) {
         serviceService.deleteService(serviceId);
+    }
+
+    @GetMapping("/{searchWord}")
+    public List<ServiceDto> getServices(@PathVariable String searchWord) {
+        return serviceService.searchServices(searchWord);
     }
 }

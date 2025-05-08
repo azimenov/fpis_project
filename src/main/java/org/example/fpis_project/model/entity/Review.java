@@ -44,4 +44,6 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
+
+    private boolean isVerified;
 }
