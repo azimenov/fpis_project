@@ -52,6 +52,6 @@ public class AdminController {
 
     @GetMapping("/businessApplications")
     public List<BusinessApplicationDto> getBusinessApplications() {
-
+        return businessService.getBusinessApplications();
     }
 }
