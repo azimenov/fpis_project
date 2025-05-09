@@ -36,6 +36,6 @@ public class BusinessApplicationDto {
 
     private String description;
 
-    private String verified;
+    private boolean verified;
 
 }

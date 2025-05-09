@@ -69,7 +69,8 @@ public class DefaultBusinessService implements BusinessService {
 
         BusinessApplication businessApplication = BusinessApplication.builder()
                 .name(businessApplicationDto.getBusinessName())
-                .address(businessApplicationDto.getCity())
+                .city(businessApplicationDto.getCity())
+                .country(businessApplicationDto.getCountry())
                 .phone(businessApplicationDto.getPhone())
                 .description(businessApplicationDto.getDescription())
                 .topic(businessApplicationDto.getBusinessType())
@@ -143,7 +144,7 @@ public class DefaultBusinessService implements BusinessService {
         createBusiness(
                 BusinessDto.builder()
                         .name(businessApplication.get().getName())
-                        .address(businessApplication.get().getAddress())
+                        .address(businessApplication.get().getCity() + ", " + businessApplication.get().getCountry())
                         .phone(businessApplication.get().getPhone())
                         .description(businessApplication.get().getDescription())
                         .ownerId(businessApplication.get().getOwner().getId())

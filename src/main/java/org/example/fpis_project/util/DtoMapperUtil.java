@@ -65,11 +65,13 @@ public class DtoMapperUtil {
                 .ownerName(businessApplication.getOwner().getFullname())
                 .ownerId(businessApplication.getOwner().getId())
                 .phone(businessApplication.getPhone())
-                .country(businessApplication.getAddress())
+                .country(businessApplication.getCountry())
+                .city(businessApplication.getCity())
                 .businessName(businessApplication.getName())
                 .businessType(businessApplication.getTopic())
                 .link(businessApplication.getLink())
                 .description(businessApplication.getDescription())
+                .verified(businessApplication.isVerified())
                 .build();
     }
 }
