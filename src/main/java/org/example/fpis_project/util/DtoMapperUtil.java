@@ -47,6 +47,8 @@ public class DtoMapperUtil {
         return StaffDto.builder()
                 .id(staff.getId())
                 .name(staff.getName())
+                .surname(staff.getSurname())
+                .phone(staff.getPhone())
                 .position(staff.getPosition())
                 .businessId(staff.getBusiness().getId())
                 .services(
