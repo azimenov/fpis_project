@@ -75,6 +75,7 @@ public class DefaultBusinessService implements BusinessService {
                 .topic(businessApplicationDto.getBusinessType())
                 .link(businessApplicationDto.getLink())
                 .verified(false)
+                .owner(owner)
                 .build();
 
         businessApplicationRepository.save(businessApplication);
