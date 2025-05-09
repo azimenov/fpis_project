@@ -14,6 +14,8 @@ import java.util.List;
 @Builder
 public class BusinessApplicationDto {
 
+    private Long id;
+
     private String ownerName;
 
     private String ownerSurname;

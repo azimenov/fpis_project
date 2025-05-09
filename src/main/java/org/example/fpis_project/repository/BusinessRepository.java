@@ -13,4 +13,8 @@ import java.util.Optional;
 public interface BusinessRepository extends JpaRepository<Business, Long> {
 
     List<Business> findAllByOwner(User userId);
+
+    List<Business> findByNameContaining(String name);
+
+    List<Business> findBusinessByTopic(String topic);
 }

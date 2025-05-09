@@ -92,13 +92,9 @@ public class ReviewService {
         return convertToDto(updatedReview);
     }
 
-    public void deleteReview(Long reviewId, String customerEmail) {
+    public void deleteReview(Long reviewId) {
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new EntityNotFoundException("Review not found: " + reviewId));
-
-        if (!review.getCustomerEmail().equals(customerEmail)) {
-            throw new IllegalArgumentException("Review does not belong to this customer");
-        }
 
         reviewRepository.delete(review);
     }

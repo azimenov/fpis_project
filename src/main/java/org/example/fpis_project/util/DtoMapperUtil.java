@@ -59,6 +59,7 @@ public class DtoMapperUtil {
 
     public static BusinessApplicationDto mapToBusinessApplicationDto(BusinessApplication businessApplication) {
         return BusinessApplicationDto.builder()
+                .id(businessApplication.getId())
                 .ownerName(businessApplication.getOwner().getFullname())
                 .ownerId(businessApplication.getOwner().getId())
                 .phone(businessApplication.getPhone())

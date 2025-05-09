@@ -126,7 +126,6 @@ public class DefaultBusinessService implements BusinessService {
     public List<BusinessApplicationDto> getBusinessApplications() {
         return businessApplicationRepository.findAll()
                 .stream()
-                .filter(BusinessApplication::isVerified)
                 .map(DtoMapperUtil::mapToBusinessApplicationDto)
                 .toList();
     }
@@ -151,4 +150,16 @@ public class DefaultBusinessService implements BusinessService {
                         .build()
         );
     }
+
+    @Override
+    public List<BusinessDto> searchBusiness(String searchWord) {
+        return businessRepository.findByNameContaining(searchWord).stream().map(DtoMapperUtil::mapToBusinessDto).toList();
+    }
+
+    @Override
+    public List<BusinessDto> getBusinessByTopic(String topic) {
+        return businessRepository.findBusinessByTopic(topic).stream().map(DtoMapperUtil::mapToBusinessDto).toList();
+    }
+
+
 }

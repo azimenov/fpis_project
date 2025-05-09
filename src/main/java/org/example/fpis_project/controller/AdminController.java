@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,14 +25,6 @@ public class AdminController {
     private final ReviewService reviewService;
     private final ServiceService serviceService;
     private final BusinessService businessService;
-
-    @DeleteMapping("/review/delete")
-    public void deleteReview(
-            @RequestParam Long reviewId,
-            @RequestParam String customerEmail
-    ) {
-        reviewService.deleteReview(reviewId, customerEmail);
-    }
 
     @PatchMapping("/review/verify")
     public void verifyReview(
@@ -53,5 +46,12 @@ public class AdminController {
     @GetMapping("/businessApplications")
     public List<BusinessApplicationDto> getBusinessApplications() {
         return businessService.getBusinessApplications();
+    }
+
+    @PutMapping("/businessApplications/{businessApplicationId}")
+    public void updateBusinessApplication(
+            @PathVariable Long businessApplicationId
+    ) {
+        businessService.verifyBusinessApplication(businessApplicationId);
     }
 }

@@ -70,4 +70,14 @@ public class BusinessController {
     public BusinessDto getBusinessByUserId(@PathVariable Long userId) {
         return businessService.getBusinessByUserId(userId);
     }
+
+    @GetMapping("/search/{searchWord}")
+    public List<BusinessDto> searchBusiness(@PathVariable String searchWord) {
+        return businessService.searchBusiness(searchWord);
+    }
+
+    @GetMapping("/topic/{topic}")
+    public List<BusinessDto> getBusinessByTopic(@PathVariable String topic) {
+        return businessService.getBusinessByTopic(topic);
+    }
 }

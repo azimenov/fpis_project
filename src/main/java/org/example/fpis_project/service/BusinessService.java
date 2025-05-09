@@ -28,4 +28,7 @@ public interface BusinessService {
 
     void verifyBusinessApplication(Long businessApplicationId);
 
+    List<BusinessDto> searchBusiness(String searchWord);
+
+    List<BusinessDto> getBusinessByTopic(String topic);
 }
