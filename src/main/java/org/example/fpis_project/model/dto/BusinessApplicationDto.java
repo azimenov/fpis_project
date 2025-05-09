@@ -36,4 +36,6 @@ public class BusinessApplicationDto {
 
     private String description;
 
+    private String verified;
+
 }
