@@ -1,5 +1,6 @@
 package org.example.fpis_project.service;
 
+import org.example.fpis_project.model.dto.BusinessApplicationDto;
 import org.example.fpis_project.model.dto.BusinessDto;
 import org.example.fpis_project.model.entity.User;
 
@@ -13,6 +14,8 @@ public interface BusinessService {
 
     BusinessDto createBusiness(BusinessDto business);
 
+    void createBusinessApplication(BusinessApplicationDto businessApplication);
+
     void deleteBusiness(Long id);
 
     BusinessDto updateBusiness(BusinessDto business);
@@ -20,4 +23,9 @@ public interface BusinessService {
     User getOwnerByBusinessId(Long businessId);
 
     BusinessDto getBusinessByUserId(Long userId);
+
+    List<BusinessApplicationDto> getBusinessApplications();
+
+    void verifyBusinessApplication(Long businessApplicationId);
+
 }

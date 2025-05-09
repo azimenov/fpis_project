@@ -1,7 +1,9 @@
 package org.example.fpis_project.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.fpis_project.model.dto.BusinessApplicationDto;
 import org.example.fpis_project.model.dto.ReviewDto;
+import org.example.fpis_project.service.BusinessService;
 import org.example.fpis_project.service.impl.ReviewService;
 import org.example.fpis_project.service.impl.ServiceService;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,6 +23,7 @@ public class AdminController {
 
     private final ReviewService reviewService;
     private final ServiceService serviceService;
+    private final BusinessService businessService;
 
     @DeleteMapping("/review/delete")
     public void deleteReview(
@@ -45,5 +48,10 @@ public class AdminController {
     @DeleteMapping("/service/{serviceId}")
     public void deleteService(@PathVariable Long serviceId) {
         serviceService.deleteService(serviceId);
+    }
+
+    @GetMapping("/businessApplications")
+    public List<BusinessApplicationDto> getBusinessApplications() {
+
     }
 }

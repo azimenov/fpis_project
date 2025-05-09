@@ -2,6 +2,7 @@ package org.example.fpis_project.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.example.fpis_project.model.dto.BusinessApplicationDto;
 import org.example.fpis_project.model.dto.BusinessDto;
 import org.example.fpis_project.model.dto.ServiceDto;
 import org.example.fpis_project.model.dto.StaffDto;
@@ -24,8 +25,8 @@ public class BusinessController {
     private final StaffService staffService;
 
     @PostMapping
-    public BusinessDto createBusiness(@RequestBody @Valid BusinessDto business) {
-        return businessService.createBusiness(business);
+    public void createBusiness(@RequestBody @Valid BusinessApplicationDto business) {
+        businessService.createBusinessApplication(business);
     }
 
     @GetMapping

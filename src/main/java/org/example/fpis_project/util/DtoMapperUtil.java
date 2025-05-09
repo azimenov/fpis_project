@@ -1,9 +1,11 @@
 package org.example.fpis_project.util;
 
+import org.example.fpis_project.model.dto.BusinessApplicationDto;
 import org.example.fpis_project.model.dto.BusinessDto;
 import org.example.fpis_project.model.dto.ServiceDto;
 import org.example.fpis_project.model.dto.StaffDto;
 import org.example.fpis_project.model.entity.Business;
+import org.example.fpis_project.model.entity.BusinessApplication;
 import org.example.fpis_project.model.entity.Staff;
 
 import java.util.Collections;
@@ -52,6 +54,19 @@ public class DtoMapperUtil {
                                 ? staff.getServices().stream().map(DtoMapperUtil::mapToServiceDto).collect(Collectors.toList())
                                 : Collections.emptyList()
                 )
+                .build();
+    }
+
+    public static BusinessApplicationDto mapToBusinessApplicationDto(BusinessApplication businessApplication) {
+        return BusinessApplicationDto.builder()
+                .ownerName(businessApplication.getOwner().getFullname())
+                .ownerId(businessApplication.getOwner().getId())
+                .phone(businessApplication.getPhone())
+                .country(businessApplication.getAddress())
+                .businessName(businessApplication.getName())
+                .businessType(businessApplication.getTopic())
+                .link(businessApplication.getLink())
+                .description(businessApplication.getDescription())
                 .build();
     }
 }
