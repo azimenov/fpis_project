@@ -31,4 +31,6 @@ public interface BusinessService {
     List<BusinessDto> searchBusiness(String searchWord);
 
     List<BusinessDto> getBusinessByTopic(String topic);
+
+    BusinessApplicationDto getBusinessApplicationById(Long id);
 }

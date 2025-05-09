@@ -48,6 +48,11 @@ public class AdminController {
         return businessService.getBusinessApplications();
     }
 
+    @GetMapping("/businessApplications/{id}")
+    public BusinessApplicationDto getBusinessApplication(@PathVariable Long id) {
+        return businessService.getBusinessApplicationById(id);
+    }
+
     @PutMapping("/businessApplications/{businessApplicationId}")
     public void updateBusinessApplication(
             @PathVariable Long businessApplicationId

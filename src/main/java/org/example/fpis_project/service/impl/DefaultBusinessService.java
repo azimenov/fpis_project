@@ -162,5 +162,13 @@ public class DefaultBusinessService implements BusinessService {
         return businessRepository.findBusinessByTopic(topic).stream().map(DtoMapperUtil::mapToBusinessDto).toList();
     }
 
+    @Override
+    public BusinessApplicationDto getBusinessApplicationById(Long id) {
+        Optional<BusinessApplication> businessApplication = businessApplicationRepository.findById(id);
+        if (businessApplication.isEmpty()) {
+            throw new EntityNotFoundException("BusinessApplication not found: " + id);
+        }
+        return DtoMapperUtil.mapToBusinessApplicationDto(businessApplication.get());
+    }
 
 }
