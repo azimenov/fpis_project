@@ -35,6 +35,8 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation 'com.amazonaws:aws-java-sdk-s3:1.12.581'
+    implementation 'com.google.code.gson:gson:2.10.1'
 }
 
 tasks.named('test') {

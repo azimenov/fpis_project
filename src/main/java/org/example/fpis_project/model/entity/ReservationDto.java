@@ -33,6 +33,7 @@ public class ReservationDto {
     @Email
     private String customerEmail;
 
+    @NotNull
     private String customerPhone;
 
     @NotNull

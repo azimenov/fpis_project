@@ -13,6 +13,33 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  localstack:
+    image: localstack/localstack:latest
+    container_name: s3-localstack
+    ports:
+      - "4566:4566"  # LocalStack edge port
+    environment:
+      - SERVICES=s3
+      - DEBUG=1
+      - DATA_DIR=/tmp/localstack/data
+      - DEFAULT_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - ${LOCALSTACK_VOLUME_DIR:-./localstack_data}:/tmp/localstack/data
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./init-s3.sh:/docker-entrypoint-initaws.d/init-s3.sh
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
 
 volumes:
   postgres_data:
+  localstack_data:

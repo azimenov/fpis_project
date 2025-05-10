@@ -1,6 +1,7 @@
 package org.example.fpis_project.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.fpis_project.model.dto.Reservation;
 import org.example.fpis_project.model.dto.ReviewDto;
@@ -9,9 +10,12 @@ import org.example.fpis_project.model.entity.Review;
 import org.example.fpis_project.repository.BusinessRepository;
 import org.example.fpis_project.repository.ReservationRepository;
 import org.example.fpis_project.repository.ReviewRepository;
+import org.example.fpis_project.util.StringListConverter;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +28,8 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final BusinessRepository businessRepository;
     private final ReservationRepository reservationRepository;
+    private final S3Service s3Service;
+    private final StringListConverter stringListConverter = new StringListConverter();
 
     public ReviewDto createReview(ReviewDto reviewDto) {
         Business business = businessRepository.findById(reviewDto.getBusinessId())
@@ -54,6 +60,21 @@ public class ReviewService {
             review.setReservation(reservation);
         }
 
+        List<String> imageUrls = new ArrayList<>();
+        if (reviewDto.getImages() != null && !reviewDto.getImages().isEmpty()) {
+            for (MultipartFile image : reviewDto.getImages()) {
+                if (!image.isEmpty()) {
+                    String imageUrl = s3Service.uploadFile(
+                            image,
+                            "reviews/" + business.getId()
+                    );
+                    imageUrls.add(imageUrl);
+                }
+            }
+        }
+
+        review.setImageUrls(stringListConverter.convertToDatabaseColumn(imageUrls));
+
         Review savedReview = reviewRepository.save(review);
         return convertToDto(savedReview);
     }
@@ -77,6 +98,7 @@ public class ReviewService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public ReviewDto updateReview(Long reviewId, ReviewDto reviewDto) {
         Review existingReview = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new EntityNotFoundException("Review not found: " + reviewId));
@@ -87,14 +109,49 @@ public class ReviewService {
 
         existingReview.setRating(reviewDto.getRating());
         existingReview.setComment(reviewDto.getComment());
+        List<String> currentImageUrls = stringListConverter.convertToEntityAttribute(existingReview.getImageUrls());
+
+        if (reviewDto.getImageUrls() != null) {
+            List<String> imagesToKeep = reviewDto.getImageUrls();
+            List<String> imagesToDelete = currentImageUrls.stream()
+                    .filter(url -> !imagesToKeep.contains(url))
+                    .toList();
+
+            for (String imageUrl : imagesToDelete) {
+                s3Service.deleteFile(imageUrl);
+            }
+
+            currentImageUrls = new ArrayList<>(imagesToKeep);
+        }
+
+        if (reviewDto.getImages() != null && !reviewDto.getImages().isEmpty()) {
+            for (MultipartFile image : reviewDto.getImages()) {
+                if (!image.isEmpty()) {
+                    String imageUrl = s3Service.uploadFile(
+                            image,
+                            "reviews/" + existingReview.getBusiness().getId()
+                    );
+                    currentImageUrls.add(imageUrl);
+                }
+            }
+        }
+
+        // Update image URLs
+        existingReview.setImageUrls(stringListConverter.convertToDatabaseColumn(currentImageUrls));
 
         Review updatedReview = reviewRepository.save(existingReview);
         return convertToDto(updatedReview);
     }
 
+    @Transactional
     public void deleteReview(Long reviewId) {
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new EntityNotFoundException("Review not found: " + reviewId));
+
+        List<String> imageUrls = stringListConverter.convertToEntityAttribute(review.getImageUrls());
+        for (String imageUrl : imageUrls) {
+            s3Service.deleteFile(imageUrl);
+        }
 
         reviewRepository.delete(review);
     }
@@ -137,6 +194,8 @@ public class ReviewService {
     }
 
     private ReviewDto convertToDto(Review review) {
+        List<String> imageUrls = stringListConverter.convertToEntityAttribute(review.getImageUrls());
+
         return ReviewDto.builder()
                 .id(review.getId())
                 .businessId(review.getBusiness().getId())
@@ -147,6 +206,7 @@ public class ReviewService {
                 .comment(review.getComment())
                 .createdAt(review.getCreatedAt())
                 .isVerified(review.isVerified())
+                .imageUrls(imageUrls)
                 .build();
     }
 }

@@ -1,5 +1,6 @@
 package org.example.fpis_project.model.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -46,4 +47,7 @@ public class Review {
     private Reservation reservation;
 
     private boolean isVerified;
+
+    @Column(columnDefinition = "TEXT")
+    private String imageUrls;
 }
