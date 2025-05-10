@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  # Existing PostgreSQL service
+  # PostgreSQL service (unchanged)
   postgres:
     image: postgres:15
     container_name: my_postgres
@@ -22,39 +22,38 @@ services:
       timeout: 5s
       retries: 5
 
-  # Existing LocalStack service
+  # Fixed LocalStack service
   localstack:
     image: localstack/localstack:latest
     container_name: s3-localstack
     ports:
-      - "4566:4566"  # LocalStack edge port
+      - "4566:4566"
     environment:
       - SERVICES=s3
       - DEFAULT_REGION=us-east-1
       - AWS_ACCESS_KEY_ID=test
       - AWS_SECRET_ACCESS_KEY=test
-      - HOSTNAME_EXTERNAL=localhost
       - DEFAULT_BUCKET_NAME=my-bucket
-      - PERSISTENCE=0
-    volumes:
-      - localstack_data:/var/lib/localstack
+      # Add the environment variable to suppress the error
+      - LEGACY_DIRECTORIES=1
+    # No volume mounts at all to avoid issues
     networks:
       - app-network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:4566/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:4566/_localstack/health"]
       interval: 10s
       timeout: 5s
       retries: 5
 
-  # Your Spring Boot application
+  # Spring Boot app (unchanged)
   fpis-app:
     build:
-      context: .  # Uses the Dockerfile in the current directory
+      context: .
       dockerfile: Dockerfile
     container_name: fpis-app
     restart: always
     ports:
-      - "8080:8080"  # Expose your app on port 8080
+      - "8080:8080"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/mydatabase
       - SPRING_DATASOURCE_USERNAME=myuser
@@ -78,4 +77,3 @@ networks:
 
 volumes:
   postgres_data:
-  localstack_data:
