@@ -23,16 +23,17 @@ services:
       - "4566:4566"  # LocalStack edge port
     environment:
       - SERVICES=s3
-      - DEBUG=1
-      - DATA_DIR=/tmp/localstack/data
       - DEFAULT_REGION=us-east-1
       - AWS_ACCESS_KEY_ID=test
       - AWS_SECRET_ACCESS_KEY=test
-      - DOCKER_HOST=unix:///var/run/docker.sock
+      - HOSTNAME_EXTERNAL=localhost
+      # Auto-create bucket on startup
+      - DEFAULT_BUCKET_NAME=my-bucket
+      # No persistence to avoid volume issues
+      - PERSISTENCE=0
     volumes:
-      - ${LOCALSTACK_VOLUME_DIR:-./localstack_data}:/tmp/localstack/data
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./init-s3.sh:/docker-entrypoint-initaws.d/init-s3.sh
+      # Using the recommended path
+      - localstack_data:/var/lib/localstack
     networks:
       - app-network
 
