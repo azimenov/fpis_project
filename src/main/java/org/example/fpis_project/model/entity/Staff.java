@@ -15,7 +15,6 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class  Staff {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,4 +31,10 @@ public class  Staff {
 
     @ManyToMany(mappedBy = "staff")
     private List<Service> services;
+
+    @Override
+    public String toString() {
+        return "Staff{id=" + id + ", name='" + name + "', ...}"; // Include other properties except services/business
+    }
+
 }

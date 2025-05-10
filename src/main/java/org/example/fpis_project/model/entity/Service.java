@@ -42,4 +42,9 @@ public class Service {
     @ManyToOne
     @JoinColumn(name = "business_id", nullable = false)
     private Business business;
+
+    @Override
+    public String toString() {
+        return "Service{id=" + id + ", name='" + name + "', ...}"; // Include other properties except staff/business
+    }
 }

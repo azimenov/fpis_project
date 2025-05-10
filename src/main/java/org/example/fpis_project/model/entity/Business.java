@@ -38,4 +38,9 @@ public class Business {
 
     @Column(columnDefinition = "TEXT")
     private String imageUrls;
+
+    @Override
+    public String toString() {
+        return "Business{id=" + id + ", name='" + name + "', ...}"; // Include other properties except staff/services
+    }
 }
