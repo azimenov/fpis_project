@@ -157,9 +157,10 @@ public class ReservationService {
         LocalDateTime now = LocalDateTime.now();
 
         List<Reservation> upcomingReservations = reservationRepository
-                .findByCustomerPhoneAndStartTimeGreaterThanEqualOrderByStartTimeAsc(phone, now);
+                .findByCustomerPhone(phone);
 
         return upcomingReservations.stream()
+                .filter(reservation -> reservation.getEndTime().isAfter(now))
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
@@ -168,9 +169,10 @@ public class ReservationService {
         LocalDateTime now = LocalDateTime.now();
 
         List<Reservation> pastReservations = reservationRepository
-                .findByCustomerPhoneAndStartTimeLessThanOrderByStartTimeDesc(phone, now);
+                .findByCustomerPhone(phone);
 
         return pastReservations.stream()
+                .filter(reservation -> reservation.getEndTime().isBefore(now))
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }

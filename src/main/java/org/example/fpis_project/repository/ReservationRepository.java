@@ -12,4 +12,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     // For past reservations
     List<Reservation> findByCustomerPhoneAndStartTimeLessThanOrderByStartTimeDesc(
             String phone, LocalDateTime beforeTime);
+
+    List<Reservation> findByCustomerPhone(String phone);
 }

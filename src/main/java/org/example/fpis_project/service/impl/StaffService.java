@@ -4,9 +4,12 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.example.fpis_project.model.dto.StaffDto;
 import org.example.fpis_project.model.entity.Business;
+import org.example.fpis_project.model.entity.Role;
 import org.example.fpis_project.model.entity.Staff;
+import org.example.fpis_project.model.entity.User;
 import org.example.fpis_project.repository.BusinessRepository;
 import org.example.fpis_project.repository.StaffRepository;
+import org.example.fpis_project.repository.UserRepository;
 import org.example.fpis_project.util.DtoMapperUtil;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +24,7 @@ public class StaffService {
     private final StaffRepository repository;
     private final StaffRepository staffRepository;
     private final BusinessRepository businessRepository;
+    private final UserRepository userRepository;
 
     public List<StaffDto> getStaffByBusinessId(Long businessId) {
         return repository.findByBusinessId(businessId).stream()
@@ -46,6 +50,15 @@ public class StaffService {
                 .phone(staffDto.getPhone())
                 .description(staffDto.getDescription())
                 .business(business)
+                .build();
+
+        User user = User.builder()
+                .fullname(staffDto.getName() + " " + staffDto.getSurname())
+                .name(staffDto.getName())
+                .surname(staffDto.getSurname())
+                .phoneNumber(staffDto.getPhone())
+                .role(Role.STAFF)
+                .password("password")
                 .build();
 
         staffRepository.save(staff);

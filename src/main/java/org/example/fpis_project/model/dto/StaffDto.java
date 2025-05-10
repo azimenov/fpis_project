@@ -20,6 +20,8 @@ public class StaffDto implements Comparable<StaffDto> {
     private String name;
     private String surname;
 
+    private String password;
+
     @NotNull
     private String position;
     private String phone;

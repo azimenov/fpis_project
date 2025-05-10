@@ -10,8 +10,11 @@ import org.example.fpis_project.model.entity.User;
 import org.example.fpis_project.service.BusinessService;
 import org.example.fpis_project.service.impl.ServiceService;
 import org.example.fpis_project.service.impl.StaffService;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,8 +37,12 @@ public class BusinessController {
         return businessService.getAllBusinesses();
     }
 
-    @PutMapping
-    public BusinessDto updateBusiness(@RequestBody @Valid BusinessDto business) {
+    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public BusinessDto updateBusiness(
+            @RequestBody @Valid BusinessDto business,
+            @RequestPart(value = "images", required = false) List<MultipartFile> images
+    ) {
+        business.setImages(images);
         return businessService.updateBusiness(business);
     }
 

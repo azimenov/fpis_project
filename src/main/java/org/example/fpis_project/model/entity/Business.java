@@ -33,4 +33,7 @@ public class Business {
 
     @OneToMany(mappedBy = "business", cascade = CascadeType.ALL)
     private List<Service> services;
+
+    @Column(columnDefinition = "TEXT")
+    private String imageUrls;
 }

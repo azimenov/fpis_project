@@ -13,23 +13,6 @@ import java.util.stream.Collectors;
 
 public class DtoMapperUtil {
 
-    public static BusinessDto mapToBusinessDto(Business business) {
-        return BusinessDto.builder()
-                .id(business.getId())
-                .name(business.getName())
-                .address(business.getAddress())
-                .phone(business.getPhone())
-                .description(business.getDescription())
-                .topic(business.getTopic())
-                .services(
-                        business.getServices() != null
-                                ? business.getServices().stream().map(DtoMapperUtil::mapToServiceDto).collect(Collectors.toList())
-                                : Collections.emptyList()
-                )
-                .ownerId(business.getOwner().getId())
-                .build();
-    }
-
     public static ServiceDto mapToServiceDto(org.example.fpis_project.model.entity.Service service) {
         return ServiceDto.builder()
                 .id(service.getId())
