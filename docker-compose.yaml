@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+  # Existing PostgreSQL service
   postgres:
     image: postgres:15
     container_name: my_postgres
@@ -15,7 +16,13 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myuser -d mydatabase"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
+  # Existing LocalStack service
   localstack:
     image: localstack/localstack:latest
     container_name: s3-localstack
@@ -27,13 +34,41 @@ services:
       - AWS_ACCESS_KEY_ID=test
       - AWS_SECRET_ACCESS_KEY=test
       - HOSTNAME_EXTERNAL=localhost
-      # Auto-create bucket on startup
       - DEFAULT_BUCKET_NAME=my-bucket
-      # No persistence to avoid volume issues
       - PERSISTENCE=0
     volumes:
-      # Using the recommended path
       - localstack_data:/var/lib/localstack
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4566/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Your Spring Boot application
+  fpis-app:
+    build:
+      context: .  # Uses the Dockerfile in the current directory
+      dockerfile: Dockerfile
+    container_name: fpis-app
+    restart: always
+    ports:
+      - "8080:8080"  # Expose your app on port 8080
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/mydatabase
+      - SPRING_DATASOURCE_USERNAME=myuser
+      - SPRING_DATASOURCE_PASSWORD=mypassword
+      - AWS_ACCESS_KEY=test
+      - AWS_SECRET_KEY=test
+      - AWS_S3_BUCKET=my-bucket
+      - AWS_S3_REGION=us-east-1
+      - AWS_S3_ENDPOINT=http://localstack:4566
+    depends_on:
+      postgres:
+        condition: service_healthy
+      localstack:
+        condition: service_healthy
     networks:
       - app-network
 
