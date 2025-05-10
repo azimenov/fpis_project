@@ -139,6 +139,7 @@ public class ReservationService {
                 .customerEmail(reservation.getCustomerEmail())
                 .customerPhone(reservation.getCustomerPhone())
                 .startTime(reservation.getStartTime())
+                .endTime(reservation.getEndTime())
                 .status(reservation.getStatus())
                 .notes(reservation.getNotes())
                 .build();

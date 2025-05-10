@@ -38,6 +38,9 @@ public class ReservationDto {
     @NotNull
     private LocalDateTime startTime;
 
+    @NotNull
+    private LocalDateTime endTime;
+
     private ReservationStatus status;
 
     private String notes;
