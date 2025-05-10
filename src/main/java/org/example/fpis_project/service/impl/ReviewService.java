@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.example.fpis_project.model.dto.Reservation;
 import org.example.fpis_project.model.dto.ReviewDto;
+import org.example.fpis_project.model.dto.ReviewImageDto;
 import org.example.fpis_project.model.entity.Business;
 import org.example.fpis_project.model.entity.Review;
 import org.example.fpis_project.repository.BusinessRepository;
@@ -136,8 +137,8 @@ public class ReviewService {
         reviewRepository.save(review.get());
     }
 
-    private ReviewDto convertToDto(Review review) {
-        return ReviewDto.builder()
+    public ReviewDto convertToDto(Review review) {
+        ReviewDto dto = ReviewDto.builder()
                 .id(review.getId())
                 .businessId(review.getBusiness().getId())
                 .reservationId(review.getReservation() != null ? review.getReservation().getId() : null)
@@ -148,5 +149,21 @@ public class ReviewService {
                 .createdAt(review.getCreatedAt())
                 .isVerified(review.isVerified())
                 .build();
+
+        // Map image entities to DTOs
+        if (review.getImages() != null) {
+            List<ReviewImageDto> imageDtos = review.getImages().stream()
+                    .map(image -> ReviewImageDto.builder()
+                            .id(image.getId())
+                            .reviewId(review.getId())
+                            .contentType(image.getContentType())
+                            .fileName(image.getFileName())
+                            .build())
+                    .collect(Collectors.toList());
+
+            dto.setImages(imageDtos);
+        }
+
+        return dto;
     }
 }
