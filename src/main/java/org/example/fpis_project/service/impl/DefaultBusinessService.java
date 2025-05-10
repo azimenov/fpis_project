@@ -4,23 +4,17 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.example.fpis_project.model.dto.BusinessApplicationDto;
 import org.example.fpis_project.model.dto.BusinessDto;
-import org.example.fpis_project.model.dto.BusinessImageDto;
 import org.example.fpis_project.model.entity.Business;
 import org.example.fpis_project.model.entity.BusinessApplication;
-import org.example.fpis_project.model.entity.BusinessImage;
 import org.example.fpis_project.model.entity.Role;
 import org.example.fpis_project.model.entity.User;
 import org.example.fpis_project.repository.BusinessApplicationRepository;
-import org.example.fpis_project.repository.BusinessImageRepository;
 import org.example.fpis_project.repository.BusinessRepository;
 import org.example.fpis_project.repository.UserRepository;
 import org.example.fpis_project.service.BusinessService;
 import org.example.fpis_project.util.DtoMapperUtil;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,7 +26,6 @@ public class DefaultBusinessService implements BusinessService {
     private final BusinessRepository businessRepository;
     private final UserRepository userRepository;
     private final BusinessApplicationRepository businessApplicationRepository;
-    private final BusinessImageRepository businessImageRepository;
 
     @Override
     public List<BusinessDto> getAllBusinesses() {
@@ -62,19 +55,8 @@ public class DefaultBusinessService implements BusinessService {
                 .topic(businessDto.getTopic())
                 .owner(owner)
                 .build();
-        business = businessRepository.save(business);
-        return DtoMapperUtil.mapToBusinessDto(businessRepository.save(business));
-    }
 
-    private BusinessImage toBusinessImage(BusinessImageDto businessImageDto, Business business, MultipartFile image) throws IOException {
-        return BusinessImage.builder()
-                .id(businessImageDto.getId())
-                .business(business)
-                .businessApplication(businessApplicationRepository.findById(businessImageDto.getBusinessApplicationId()).orElse(null))
-                .imageData(image.getBytes())
-                .contentType(image.getContentType())
-                .fileName(businessImageDto.getFileName())
-                .build();
+        return DtoMapperUtil.mapToBusinessDto(businessRepository.save(business));
     }
 
     @Override
@@ -95,11 +77,11 @@ public class DefaultBusinessService implements BusinessService {
                 .link(businessApplicationDto.getLink())
                 .verified(false)
                 .owner(owner)
-                .createdAt(LocalDate.now())
                 .build();
 
         businessApplicationRepository.save(businessApplication);
     }
+
 
 
     @Override
@@ -159,7 +141,7 @@ public class DefaultBusinessService implements BusinessService {
 
         businessApplication.get().setVerified(true);
         businessApplicationRepository.save(businessApplication.get());
-        BusinessDto businessDto = createBusiness(
+        createBusiness(
                 BusinessDto.builder()
                         .name(businessApplication.get().getName())
                         .address(businessApplication.get().getCity() + ", " + businessApplication.get().getCountry())
@@ -169,19 +151,6 @@ public class DefaultBusinessService implements BusinessService {
                         .topic(businessApplication.get().getTopic())
                         .build()
         );
-
-        migrateImages(businessDto.getId(), businessApplication.get());
-    }
-
-    private void migrateImages(Long id, BusinessApplication businessApplication) {
-        List<BusinessImage> images = businessImageRepository.findByBusinessApplication(businessApplication);
-
-        Business business = businessRepository.findById(id).orElse(null);
-
-        for(BusinessImage image : images) {
-            image.setBusiness(business);
-            businessImageRepository.save(image);
-        }
     }
 
     @Override

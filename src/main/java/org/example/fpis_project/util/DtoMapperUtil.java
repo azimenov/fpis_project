@@ -72,7 +72,6 @@ public class DtoMapperUtil {
                 .link(businessApplication.getLink())
                 .description(businessApplication.getDescription())
                 .verified(businessApplication.isVerified())
-                .createdAt(businessApplication.getCreatedAt())
                 .build();
     }
 }

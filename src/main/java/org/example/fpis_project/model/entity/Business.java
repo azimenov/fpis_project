@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,8 +32,5 @@ public class Business {
     private User owner;
 
     @OneToMany(mappedBy = "business", cascade = CascadeType.ALL)
-    private List<Service> services = new ArrayList<>();
-
-    @OneToMany(mappedBy = "business", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<BusinessImage> images = new ArrayList<>();
+    private List<Service> services;
 }

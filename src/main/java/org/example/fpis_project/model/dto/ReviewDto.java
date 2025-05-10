@@ -11,8 +11,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @Builder
@@ -43,6 +41,4 @@ public class ReviewDto {
     private LocalDateTime createdAt;
 
     private boolean isVerified;
-
-    private List<ReviewImageDto> images = new ArrayList<>();
 }
