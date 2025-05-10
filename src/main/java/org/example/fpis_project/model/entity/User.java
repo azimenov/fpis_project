@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -24,6 +25,10 @@ public class User {
     @Column(nullable = false)
     private String fullname;
 
+    private String name;
+
+    private String surname;
+
     @Column(unique = true)
     private String email;
 
@@ -36,4 +41,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private Role role = Role.USER;
+
+    private String gender;
+
+    private LocalDate birthdate;
 }

@@ -27,11 +27,31 @@ public class DefaultUserService implements UserService {
 
     @Override
     public User createUser(User user) {
+        user.setFullname(user.getName() + " " + user.getSurname());
         return userRepository.save(user);
     }
 
     @Override
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public User updateUser(Long id, User user) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User updatedUser = optionalUser.get();
+            updatedUser.setName(user.getName());
+            updatedUser.setSurname(user.getSurname());
+            updatedUser.setFullname(user.getName() + ' ' + user.getSurname());
+            updatedUser.setEmail(user.getEmail());
+            updatedUser.setBirthdate(user.getBirthdate());
+            updatedUser.setGender(user.getGender());
+            updatedUser.setPhoneNumber(user.getPhoneNumber());
+            return userRepository.save(updatedUser);
+        }
+        else {
+            return null;
+        }
     }
 }
