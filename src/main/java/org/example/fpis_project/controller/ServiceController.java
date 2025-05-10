@@ -43,7 +43,7 @@ public class ServiceController {
         serviceService.deleteService(serviceId);
     }
 
-    @GetMapping("/{searchWord}")
+    @GetMapping("/search/{searchWord}")
     public List<ServiceDto> getServices(@PathVariable String searchWord) {
         return serviceService.searchServices(searchWord);
     }
