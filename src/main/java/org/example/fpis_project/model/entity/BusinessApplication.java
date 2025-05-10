@@ -28,6 +28,8 @@ public class BusinessApplication {
 
     private String city;
 
+    private String address;
+
     private String phone;
 
     private String description;

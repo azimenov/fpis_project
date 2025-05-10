@@ -15,6 +15,7 @@ import org.example.fpis_project.service.BusinessService;
 import org.example.fpis_project.util.DtoMapperUtil;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -71,12 +72,14 @@ public class DefaultBusinessService implements BusinessService {
                 .name(businessApplicationDto.getBusinessName())
                 .city(businessApplicationDto.getCity())
                 .country(businessApplicationDto.getCountry())
+                .address(businessApplicationDto.getAddress())
                 .phone(businessApplicationDto.getPhone())
                 .description(businessApplicationDto.getDescription())
                 .topic(businessApplicationDto.getBusinessType())
                 .link(businessApplicationDto.getLink())
                 .verified(false)
                 .owner(owner)
+                .createdAt(LocalDate.now())
                 .build();
 
         businessApplicationRepository.save(businessApplication);

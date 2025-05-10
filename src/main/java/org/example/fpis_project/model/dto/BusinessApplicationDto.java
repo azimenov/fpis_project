@@ -29,6 +29,8 @@ public class BusinessApplicationDto {
 
     private String city;
 
+    private String address;
+
     private String businessName;
 
     private String businessType;

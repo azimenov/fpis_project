@@ -48,12 +48,12 @@ public class ReservationController {
     }
 
     @GetMapping("/client/current")
-    public ResponseEntity<List<ReservationDto>> getCurrentReservations(@RequestParam String email) {
-        return ResponseEntity.ok(reservationService.getCurrentReservations(email));
+    public ResponseEntity<List<ReservationDto>> getCurrentReservations(@RequestParam String phone) {
+        return ResponseEntity.ok(reservationService.getCurrentReservations(phone));
     }
 
     @GetMapping("/client/history")
-    public ResponseEntity<List<ReservationDto>> getReservationHistory(@RequestParam String email) {
-        return ResponseEntity.ok(reservationService.getReservationHistory(email));
+    public ResponseEntity<List<ReservationDto>> getReservationHistory(@RequestParam String phone) {
+        return ResponseEntity.ok(reservationService.getReservationHistory(phone));
     }
 }

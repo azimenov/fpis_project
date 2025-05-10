@@ -152,22 +152,22 @@ public class ReservationService {
                 (start.isBefore(reservation.getEndTime()) && end.isAfter(reservation.getStartTime())));
     }
 
-    public List<ReservationDto> getCurrentReservations(String email) {
+    public List<ReservationDto> getCurrentReservations(String phone) {
         LocalDateTime now = LocalDateTime.now();
 
         List<Reservation> upcomingReservations = reservationRepository
-                .findByCustomerEmailAndStartTimeGreaterThanEqualOrderByStartTimeAsc(email, now);
+                .findByCustomerPhoneAndStartTimeGreaterThanEqualOrderByStartTimeAsc(phone, now);
 
         return upcomingReservations.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
 
-    public List<ReservationDto> getReservationHistory(String email) {
+    public List<ReservationDto> getReservationHistory(String phone) {
         LocalDateTime now = LocalDateTime.now();
 
         List<Reservation> pastReservations = reservationRepository
-                .findByCustomerEmailAndStartTimeLessThanOrderByStartTimeDesc(email, now);
+                .findByCustomerPhoneAndStartTimeLessThanOrderByStartTimeDesc(phone, now);
 
         return pastReservations.stream()
                 .map(this::convertToDto)

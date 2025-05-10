@@ -8,9 +8,8 @@ import java.util.List;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
     List<Reservation> findByStaffIdAndStartTimeBetween(Long staffId, LocalDateTime start, LocalDateTime end);
-    List<Reservation> findByCustomerEmailAndStartTimeGreaterThanEqualOrderByStartTimeAsc(
-            String email, LocalDateTime startTime);
+    List<Reservation> findByCustomerPhoneAndStartTimeGreaterThanEqualOrderByStartTimeAsc(String phone, LocalDateTime startTime);
     // For past reservations
-    List<Reservation> findByCustomerEmailAndStartTimeLessThanOrderByStartTimeDesc(
-            String email, LocalDateTime beforeTime);
+    List<Reservation> findByCustomerPhoneAndStartTimeLessThanOrderByStartTimeDesc(
+            String phone, LocalDateTime beforeTime);
 }
