@@ -153,6 +153,7 @@ public class DefaultBusinessService implements BusinessService {
                 .description(businessDto.getDescription())
                 .topic(businessDto.getTopic())
                 .owner(owner)
+                .imageUrls(stringListConverter.convertToDatabaseColumn(currentImageUrls))
                 .build();
 
         return mapToBusinessDto(businessRepository.save(business));
