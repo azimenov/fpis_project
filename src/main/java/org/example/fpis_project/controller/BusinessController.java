@@ -39,7 +39,7 @@ public class BusinessController {
 
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public BusinessDto updateBusiness(
-            @RequestBody @Valid BusinessDto business,
+            @RequestPart("business") @Valid BusinessDto business,
             @RequestPart(value = "images", required = false) List<MultipartFile> images
     ) {
         business.setImages(images);

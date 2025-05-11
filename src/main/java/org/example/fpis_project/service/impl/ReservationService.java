@@ -42,6 +42,12 @@ public class ReservationService {
                 .collect(Collectors.toList());
     }
 
+    public ReservationDto getReservation(Long reservationId) {
+        Reservation res = this.reservationRepository.findById(reservationId).orElseThrow(
+                () -> new EntityNotFoundException("Reservation not found: " + reservationId));
+        return convertToDto(res);
+    }
+
     public ReservationDto createReservation(ReservationDto reservationDto) {
         Business business = businessRepository.findById(reservationDto.getBusinessId())
                 .orElseThrow(() -> new EntityNotFoundException("Business not found: " + reservationDto.getBusinessId()));
