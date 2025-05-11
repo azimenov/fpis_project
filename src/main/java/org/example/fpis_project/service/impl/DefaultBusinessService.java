@@ -138,7 +138,7 @@ public class DefaultBusinessService implements BusinessService {
                 if (!image.isEmpty()) {
                     String imageUrl = s3Service.uploadFile(
                             image,
-                            "reviews/" + business.getId()
+                            "business/" + business.getId()
                     );
                     currentImageUrls.add(imageUrl);
                 }

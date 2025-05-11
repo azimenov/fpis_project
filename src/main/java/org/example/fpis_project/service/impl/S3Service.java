@@ -43,13 +43,10 @@ public class S3Service {
                     metadata
             ).withCannedAcl(CannedAccessControlList.PublicRead));
 
-            // Generate URL based on whether we're using LocalStack or AWS
             String fileUrl;
             if (endpoint != null && !endpoint.isEmpty()) {
-                // For LocalStack
                 fileUrl = endpoint + "/" + bucketName + "/" + key;
             } else {
-                // For AWS
                 fileUrl = amazonS3.getUrl(bucketName, key).toString();
             }
 

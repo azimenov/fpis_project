@@ -34,12 +34,10 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("*");  // Allow all origins
-        // Or use setAllowedOriginPatterns for more Spring Security versions
-        // configuration.setAllowedOriginPatterns(List.of("*"));
-        configuration.addAllowedMethod("*");  // Allow all HTTP methods
-        configuration.addAllowedHeader("*");  // Allow all headers
-        configuration.setAllowCredentials(false);  // Must be false when using '*' for allowed origins
+        configuration.addAllowedOrigin("*");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        configuration.setAllowCredentials(false);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

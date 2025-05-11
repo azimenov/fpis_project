@@ -61,6 +61,7 @@ public class StaffService {
                 .password("password")
                 .build();
 
+        userRepository.save(user);
         staffRepository.save(staff);
 
         return DtoMapperUtil.mapToStaffDto(staff);
