@@ -63,4 +63,9 @@ public class ReviewController {
         reviewService.verifyReview(reviewId);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping
+    public ResponseEntity<List<ReviewDto>> getReviews() {
+        return ResponseEntity.ok(reviewService.getAllReviews());
+    }
 }

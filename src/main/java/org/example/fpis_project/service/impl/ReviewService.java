@@ -209,4 +209,11 @@ public class ReviewService {
                 .imageUrls(imageUrls)
                 .build();
     }
+
+    public List<ReviewDto> getAllReviews() {
+        List<Review> reviews = reviewRepository.findAll();
+        return reviews.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
 }

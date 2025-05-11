@@ -29,6 +29,11 @@ public class ReservationController {
         return ResponseEntity.ok(reservationService.createReservation(reservationDto));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ReservationDto> getReservation(@PathVariable Long id) {
+        return ResponseEntity.ok(reservationService.getReservation(id));
+    }
+
     @GetMapping("/available")
     public ResponseEntity<List<ReservationDto>> getAvailableTimeSlots(
             @RequestParam Long businessId,
