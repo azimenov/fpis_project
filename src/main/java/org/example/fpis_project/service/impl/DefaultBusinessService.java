@@ -138,7 +138,7 @@ public class DefaultBusinessService implements BusinessService {
                 if (!image.isEmpty()) {
                     String imageUrl = s3Service.uploadFile(
                             image,
-                            "reviews/" + business.getId()
+                            "business/" + business.getId()
                     );
                     currentImageUrls.add(imageUrl);
                 }
@@ -153,6 +153,7 @@ public class DefaultBusinessService implements BusinessService {
                 .description(businessDto.getDescription())
                 .topic(businessDto.getTopic())
                 .owner(owner)
+                .imageUrls(stringListConverter.convertToDatabaseColumn(currentImageUrls))
                 .build();
 
         return mapToBusinessDto(businessRepository.save(business));

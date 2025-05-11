@@ -166,7 +166,7 @@ public class ReviewService {
         double averageRating = reviews.stream()
                 .mapToInt(Review::getRating)
                 .average()
-                .orElse(0.0);
+                .orElse(5.0);
 
         Map<Integer, Long> ratingDistribution = reviews.stream()
                 .collect(Collectors.groupingBy(Review::getRating, Collectors.counting()));
